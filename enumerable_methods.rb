@@ -14,6 +14,16 @@ module Enumerable
       for elem in self
         yield(elem)
       end
+    end
+  end
+
+  def my_each_with_index
+    return to_enum(:my_each_with_index) unless block_given?
+    index = 0
+    for elem in self
+      yield(elem, index)
+      index += 1
+    end
   end
 
 end
