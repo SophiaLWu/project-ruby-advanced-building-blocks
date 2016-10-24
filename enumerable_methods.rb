@@ -110,4 +110,18 @@ module Enumerable
     end
   end
 
+  def my_map
+    return to_enum(:my_map) unless block_given?
+
+    result = []
+    if self.is_a? Hash
+      my_each { |k,v| result << yield(k, v) }
+    else # self is array
+      my_each { |elem| result << yield(elem) }
+    end
+    result
+  end
+
 end
+
+

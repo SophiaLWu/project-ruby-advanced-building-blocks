@@ -99,7 +99,7 @@ puts h6.any? == h6.my_any?
 puts h6.any? { |k,v| v % 2 == 0 } == h6.my_any? { |k,v| v % 2 == 0 }
 
 
-# ********************* my_count? tests *********************
+# ********************* my_count tests *********************
 puts "My_count tests start here:"
 # Should work for arrays
 a10 = [1,2,3,4,2]
@@ -120,5 +120,26 @@ puts h7.count { |k,v| v % 2 == 0 } == h7.my_count { |k,v| v % 2 == 0 }
 puts h8.count { |k,v| v % 2 == 0 } == h8.my_count { |k,v| v % 2 == 0 }
 puts h7.count(2) == h7.my_count(2)
 puts h8.count(-5) == h8.my_count(-5)
+
+
+# ********************* my_map tests *********************
+puts "My_map tests start here:"
+# Should work for arrays
+a11 = [1,2,3,4,5]
+puts [].map
+puts [].my_map
+puts [].map { |a| a*a } == [].my_map { |a| a*a }
+puts a11.map { |a| a*a } == a11.my_map { |a| a*a }
+
+# Should work for hashes
+h9 = {"a" => 1, "b" => 2, "c" => 3}
+h10 = Hash.new
+puts h10.map
+puts h10.my_map
+puts h9.map { |k,v| [k + "x", v * 2] } == h9.my_map { |k,v| [k + "x", v * 2] }
+puts h10.map { |k,v| [k + "x", v * 2] } == h10.my_map { |k,v| [k + "x", v * 2] }
+
+
+
 
 
