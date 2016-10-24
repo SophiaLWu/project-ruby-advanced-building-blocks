@@ -44,18 +44,34 @@ module Enumerable
 
   # Works for both arrays and hashes
   def my_all?
-    if block_given?
-      if self.is_a? Hash
-        my_each { |k,v| return false unless yield(k, v) }
-      else # self is array
+    if self.is_a?(Hash) && block_given?
+      my_each { |k,v| return false unless yield(k, v) }
+    else # self is array
+      if block_given?
         my_each { |elem| return false unless yield(elem) }
+      else
+        my_each { |elem| return false if elem == false || elem.nil? }
       end
-    else
-      my_each { |elem| return false if elem == false || elem.nil? }
     end
     true
   end
 
+  # Works for both arrays and hashes
+  def my_any?
+    if self.is_a? Hash
+      if block_given?
+        my_each { |k,v| return true if yield(k, v) }
+      else
+        return true unless self.empty? 
+      end
+    else # self is array
+      if block_given?
+        my_each { |elem| return true if yield(elem) }
+      else
+        my_each { |elem| return true unless elem == false || elem.nil? }
+      end
+    end
+    false
+  end
+
 end
-
-

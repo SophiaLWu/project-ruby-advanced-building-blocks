@@ -31,23 +31,43 @@ puts a3.my_select { |e| e % 2 == 0 }  # same output
 
 # Should work for hashes
 h = {"a" => 100, "b" => 200, "c" => 300}
-puts h.select { |k,v| k > "a" } == h.my_select { |k,v| k > "a" }  # should be true
-puts h.select { |k,v| v < 200 } == h.my_select { |k,v| v < 200 }  # should be true
+puts h.select { |k,v| k > "a" } == h.my_select { |k,v| k > "a" }
+puts h.select { |k,v| v < 200 } == h.my_select { |k,v| v < 200 }
 
 
 # ********************* my_all? tests *********************
 # Should work for arrays
 a4 = [2,4,6,8]
-puts a4.all? { |e| e % 2 == 0 } == a4.my_all? { |e| e % 2 == 0 }  # should be true
+puts a4.all? { |e| e % 2 == 0 } == a4.my_all? { |e| e % 2 == 0 }
 a5 = [2,4,6,7]
-puts a5.all? { |e| e % 2 == 0 } == a5.my_all? { |e| e % 2 == 0 }  # should be true
+puts a5.all? { |e| e % 2 == 0 } == a5.my_all? { |e| e % 2 == 0 }
 a6 = [nil,1,2,3]
-puts a6.all? == a6.my_all?  # should be true
+puts a6.all? == a6.my_all?
 
 # Should work for hashes
 h2 = {"a" => 100, "b" => 200, "c" => 300}
-puts h2.all? { |k,v| k > "a" } == h2.my_all? { |k,v| k > "a" }  # should be true
-puts h2.all? { |k,v| v < 400 } == h2.my_all? { |k,v| v < 400 }  # should be true
-h3 = {}
-puts h3.all? == a3.my_all?  # should be true
+puts h2.all? { |k,v| k > "a" } == h2.my_all? { |k,v| k > "a" }
+puts h2.all? { |k,v| v < 400 } == h2.my_all? { |k,v| v < 400 }
+puts h2.all? == h2.my_all?
+h3 = Hash.new
+puts h3.all? == h3.my_all?
+puts h3.all? { |k,v| k > "a" } == h3.my_all? { |k,v| k > "a" }
+
+# ********************* my_any? tests *********************
+# Should work for arrays
+a7 = [1,3,7,10]
+puts a7.any? { |e| e % 2 == 0 } == a7.my_any? { |e| e % 2 == 0 }
+a8 = [1,3,7,9]
+puts a8.any? { |e| e % 2 == 0 } == a8.my_any? { |e| e % 2 == 0 }
+puts [1,nil,3].any? == [1,nil,3].my_any? # both should return true
+puts [nil,nil].any? == [nil,nil].my_any? # both should return false
+puts [].any? == [].my_any? # both should return false
+
+# Should work for hashes
+h4 = {"a" => 1, "b" => 2, "c" => 3}
+puts h4.any? { |k,v| k > "a" } == h4.my_any? { |k,v| k > "a" }
+puts h4.any? { |k,v| v > 2 } == h4.my_any? { |k,v| v > 2 }
+puts h4.any? == h4.my_any? # both should return true
+puts Hash.new.any? == Hash.new.my_any? # both should return false
+
 
