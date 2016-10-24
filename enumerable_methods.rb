@@ -74,4 +74,22 @@ module Enumerable
     false
   end
 
+  # Works for both arrays and hashes
+  def my_none?
+    if self.is_a? Hash
+      if block_given?
+        my_each { |k,v| return false if yield(k, v) }
+      else
+        return false unless self.empty? 
+      end
+    else # self is array
+      if block_given?
+        my_each { |elem| return false if yield(elem) }
+      else
+        my_each { |elem| return false unless elem == false || elem.nil? }
+      end
+    end
+    true
+  end
+
 end
