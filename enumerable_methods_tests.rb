@@ -24,6 +24,10 @@ a2 = ["zero", "one", "two", "three"]
 a2.each_with_index { |e, i| puts "#{i}: #{e}" }     # should have
 a2.my_each_with_index { |e, i| puts "#{i}: #{e}" }  # same output
 
+vegetables = {"apples": 5, "bananas": 10, "kiwis": 3}
+vegetables.each_with_index { |(k,v),i| puts "#{i}: #{v} #{k}" }     # should have
+vegetables.my_each_with_index { |(k,v),i| puts "#{i}: #{v} #{k}" }  # same output
+
 
 # *********************my_select tests *********************
 puts "My_select tests start here:"

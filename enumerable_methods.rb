@@ -1,9 +1,8 @@
 # PROJECT 2: ENUMERABLE METHODS
-# Rebuilding enumerable methods to work for arrays and hashes (when applicable)
+# Rebuilding enumerable methods to work for both arrays and hashes
 
 module Enumerable
 
-  # Works for both arrays and hashes
   def my_each
     return to_enum(:my_each) unless block_given?
 
@@ -21,13 +20,19 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
     index = 0
-    for elem in self
-      yield(elem, index)
-      index += 1
+    if self.is_a? Hash
+      for key in self.keys
+        yield([key, self[key]], index)
+        index += 1
+      end
+    else # self is array
+      for elem in self
+        yield(elem, index)
+        index += 1
+      end
     end
   end
 
-  # Works for both arrays and hashes
   def my_select
     return to_enum(:my_select) unless block_given?
 
@@ -42,7 +47,6 @@ module Enumerable
     new_collection
   end
 
-  # Works for both arrays and hashes
   def my_all?
     if self.is_a?(Hash) && block_given?
       my_each { |k,v| return false unless yield(k, v) }
@@ -56,7 +60,6 @@ module Enumerable
     true
   end
 
-  # Works for both arrays and hashes
   def my_any?
     if self.is_a? Hash
       if block_given?
@@ -74,7 +77,6 @@ module Enumerable
     false
   end
 
-  # Works for both arrays and hashes
   def my_none?
     if self.is_a? Hash
       if block_given?
