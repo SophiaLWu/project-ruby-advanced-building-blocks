@@ -27,7 +27,7 @@ module Enumerable
     end
   end
 
-  # Works for arrays and hashes
+  # Works for both arrays and hashes
   def my_select
     return to_enum(:my_select) unless block_given?
 
@@ -38,8 +38,22 @@ module Enumerable
       new_collection = []
       my_each { |elem| new_collection << elem if yield(elem) }
     end
-    
+
     new_collection
+  end
+
+  # Works for both arrays and hashes
+  def my_all?
+    if block_given?
+      if self.is_a? Hash
+        my_each { |k,v| return false unless yield(k, v) }
+      else # self is array
+        my_each { |elem| return false unless yield(elem) }
+      end
+    else
+      my_each { |elem| return false if elem == false || elem.nil? }
+    end
+    true
   end
 
 end
