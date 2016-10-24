@@ -122,6 +122,43 @@ module Enumerable
     result
   end
 
+  # Only implemented for arrays
+  def my_inject(sum = nil)
+    my_each do |n|
+      if sum
+        sum = yield(sum, n)
+      else
+        sum = self[0]
+      end
+    end
+    sum
+  end
+
+  def multiply_els
+    self.my_inject { |sum, elem| sum * elem }
+  end
+
+  # Modified map function that takes either a proc or block
+  def my_map_mod(p = nil)
+    return to_enum(:my_map) unless block_given? || p
+
+    result = []
+    if block_given?
+      if self.is_a? Hash
+        my_each { |k,v| result << yield(k, v) }
+      else # self is array
+        my_each { |elem| result << yield(elem) }
+      end
+    elsif proc
+      if self.is_a? Hash
+        my_each { |k,v| result << p.call(k, v) }
+      else # self is array
+        my_each { |elem| result << p.call(elem) }
+      end
+    end
+    result
+  end
+
 end
 
 

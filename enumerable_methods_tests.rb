@@ -140,6 +140,37 @@ puts h9.map { |k,v| [k + "x", v * 2] } == h9.my_map { |k,v| [k + "x", v * 2] }
 puts h10.map { |k,v| [k + "x", v * 2] } == h10.my_map { |k,v| [k + "x", v * 2] }
 
 
+# ********************* my_inject tests *********************
+puts "My_inject tests start here:"
+# Should work for arrays
+a12 = [1,2,3,4,5,6,7,8,9,10]
+puts [].inject == [].my_inject
+puts [].inject { |sum,n| sum + n } == [].my_inject { |sum,n| sum + n }
+puts a12.inject { |sum,n| sum + n } == a12.my_inject { |sum,n| sum + n }
+puts [2,4,5].multiply_els == 40
 
+
+# ********************* my_map_mod tests *********************
+puts "My_map_mod tests start here:"
+# Should work for arrays
+a11 = [1,2,3,4,5]
+p1 = Proc.new { |a| a*a }
+puts [].map
+puts [].my_map_mod
+puts [].map { |a| a*a } == [].my_map_mod { |a| a*a }
+puts a11.map { |a| a*a } == a11.my_map_mod { |a| a*a }
+puts a11.my_map_mod { |a| a*a } == a11.my_map_mod(&p1)
+puts [].my_map_mod { |a| a*a } == [].my_map_mod(&p1)
+
+# Should work for hashes
+h9 = {"a" => 1, "b" => 2, "c" => 3}
+h10 = Hash.new
+p2 = Proc.new { |k,v| [k + "x", v * 2] }
+puts h10.map
+puts h10.my_map_mod
+puts h9.map { |k,v| [k + "x", v * 2] } == h9.my_map_mod { |k,v| [k + "x", v * 2] }
+puts h10.map { |k,v| [k + "x", v * 2] } == h10.my_map_mod { |k,v| [k + "x", v * 2] }
+puts h9.my_map_mod { |k,v| [k + "x", v * 2] } == h9.my_map_mod(&p2)
+puts h10.my_map_mod { |k,v| [k + "x", v * 2] } == h10.my_map_mod(&p2)
 
 
