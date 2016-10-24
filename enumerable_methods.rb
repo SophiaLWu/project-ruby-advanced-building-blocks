@@ -94,4 +94,20 @@ module Enumerable
     true
   end
 
+  def my_count(item = nil, &block)
+    if self.empty?
+      0
+    elsif item
+      if self.is_a? Hash
+        0
+      else # self is array
+        (my_select { |elem| elem == item }).size
+      end
+    elsif block_given?
+      (my_select &block).size
+    else
+      self.size
+    end
+  end
+
 end

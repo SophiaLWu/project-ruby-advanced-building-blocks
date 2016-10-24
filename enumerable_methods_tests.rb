@@ -98,3 +98,27 @@ h6 = Hash.new
 puts h6.any? == h6.my_any?
 puts h6.any? { |k,v| v % 2 == 0 } == h6.my_any? { |k,v| v % 2 == 0 }
 
+
+# ********************* my_count? tests *********************
+puts "My_count tests start here:"
+# Should work for arrays
+a10 = [1,2,3,4,2]
+puts a10.count == a10.my_count
+puts [].count == [].my_count
+puts a10.count(2) == a10.count(2)
+puts [].count(2) == [].my_count(2)
+puts a10.count { |a| a % 2 == 0 } == a10.my_count { |a| a % 2 == 0 }
+puts [].count { |a| a % 2 == 0 } == [].my_count { |a| a % 2 == 0 }
+
+
+# Should work for hashes
+h7 = {"a" => 1, "b" => 2, "c" => 2}
+h8 = Hash.new
+puts h7.count == h7.my_count
+puts h8.count == h8.my_count
+puts h7.count { |k,v| v % 2 == 0 } == h7.my_count { |k,v| v % 2 == 0 } 
+puts h8.count { |k,v| v % 2 == 0 } == h8.my_count { |k,v| v % 2 == 0 }
+puts h7.count(2) == h7.my_count(2)
+puts h8.count(-5) == h8.my_count(-5)
+
+
